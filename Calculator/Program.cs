@@ -259,12 +259,12 @@ namespace Microsoft.Samples.CompactFramework
                     break;
 
                     case Command.LNail:
-                    calc.DoOperator(Token.TokenType.LNail);
+                    calc.DoParenthenes(Token.TokenType.LNail);
                     break;
 
 
                     case Command.RNail:
-                    calc.DoOperator(Token.TokenType.RNail);
+                    calc.DoParenthenes(Token.TokenType.RNail);
                     break;
 
                 case Command.Minus:
@@ -1013,6 +1013,14 @@ namespace Microsoft.Samples.CompactFramework
             AddOperatorToken(type);
         }
 
+        public void DoParenthenes(Token.TokenType type)
+            {
+
+
+            AddOperatorToken(type);
+        
+        }
+
         public void DoNegative()
         {
             if (CurrentToken().IsNumber())
@@ -1033,6 +1041,8 @@ namespace Microsoft.Samples.CompactFramework
                         new Number(1), CurrentToken().TokenNumber);
             }
         }
+
+        
 
         public void DoClearAll()
         {
@@ -1191,6 +1201,7 @@ namespace Microsoft.Samples.CompactFramework
             {
                 DoBinaryEval2(operatorStack2, numberStack2);
             }
+
 
             // Update token list
 
