@@ -23,12 +23,15 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Microsoft.Samples.CompactFramework
 {
     // Calculator window
     public class Window : System.Windows.Forms.Form
     {
+        private bool _isOpenPartneses;
+
         private Button[] buttons;
         private Button[] newbuttons;
 
@@ -113,8 +116,8 @@ namespace Microsoft.Samples.CompactFramework
 
             calc = new Calculator();
 
-            windowWidth = 240;
-            windowHeight = 320-20;
+            windowWidth = 280;
+            windowHeight = 380-20;
 
             windowFont = new Font(
                 FontFamily.GenericSansSerif,
@@ -208,10 +211,19 @@ namespace Microsoft.Samples.CompactFramework
             windowFont.Dispose();
         }
 
-
+       
+        
         //Action
         private void DoCommand(Command cmd)
         {
+
+            if(_isOpenPartneses)
+                {
+
+            
+                }
+
+
             switch (cmd)
             {
                 case Command.MemorySet:
@@ -264,7 +276,7 @@ namespace Microsoft.Samples.CompactFramework
 
 
                     case Command.RNail:
-                    calc.DoParenthenes(Token.TokenType.RNail);
+                    calc.DoOperator(Token.TokenType.RNail);
                     break;
 
                 case Command.Minus:
@@ -333,14 +345,7 @@ namespace Microsoft.Samples.CompactFramework
 
             editBox.Render(graphics);
 
-            // Buttons
-
             
-   // foreach (Button item in newbuttons)
-//{
-//        item.Render(graphics);;
-//
-//}
 
             foreach (Button button in buttons)
             {
@@ -997,10 +1002,46 @@ namespace Microsoft.Samples.CompactFramework
             }
         }
 
+
+        
+      private void DoParnthesesOperation(List<Token> tokens)
+           {
        
+       
+       
+       
+           }
+        
 
         public void DoOperator(Token.TokenType type)
         {
+
+             
+
+            if(type==Token.TokenType.RNail)
+                {
+
+
+          var lnail=TokenList.FirstOrDefault(s=>s.Type==Token.TokenType.LNail);
+                var index=TokenList.IndexOf(lnail);
+           var newlist=new List<Token>();
+                while (TokenList[index].Type!=Token.TokenType.RNail)
+	            {
+
+                    newlist.Add(TokenList[index]);
+                    index++;
+
+
+	             }
+
+                DoParnthesesOperation(newlist);
+	                }
+              
+
+               
+        
+           
+
             if (CurrentToken().IsOperator())
             {
                 RemoveCurrentToken();
@@ -1019,7 +1060,7 @@ namespace Microsoft.Samples.CompactFramework
 
             AddOperatorToken(type);
         
-        }
+             }
 
         public void DoNegative()
         {
@@ -1068,11 +1109,7 @@ namespace Microsoft.Samples.CompactFramework
             }
         }
 
-        public void DoParentheses()
-            {
-        
-         
-            }
+       
 
         public void DoPercent()
         {
