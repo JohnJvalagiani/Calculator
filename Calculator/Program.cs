@@ -116,21 +116,21 @@ namespace Microsoft.Samples.CompactFramework
 
             calc = new Calculator();
 
-            windowWidth = 280;
-            windowHeight = 380-20;
+            windowWidth = 240;
+            windowHeight = 320-20;
 
             windowFont = new Font(
                 FontFamily.GenericSansSerif,
                 12,
                 FontStyle.Bold);
 
-            this.ClientSize = new Size(windowWidth, windowHeight);
+            this.ClientSize = new Size(windowWidth, windowHeight+40);
             this.MaximizeBox = false;
 
             // Calculate button size based on window size (button matrix is 5x5)
 
-            buttonWidth = windowWidth / 6;
-            buttonHeight = windowHeight / 7;
+            buttonWidth = windowWidth / 5;
+            buttonHeight = windowHeight / 6;
 
             SizeMargin = Math.Min(buttonWidth / 8, buttonHeight / 8);
 
@@ -159,12 +159,11 @@ namespace Microsoft.Samples.CompactFramework
             {
                 x = SizeMargin;
 
-                for (col = 0; col < 6; col++)
+                for (col = 0; col <5; col++)
                 {
-                    if (buttonCount < (int)Command.Max)
+                    if (buttonCount < (int)Command.LNail)
                     {
-                        if(buttonCount==25)
-                            x+=40;
+                        
 
                         buttons[buttonCount] = new Button(
                             this,
@@ -188,8 +187,29 @@ namespace Microsoft.Samples.CompactFramework
                 y += SizeMargin + buttonHeight + SizeMargin;
             }
 
-            
+            buttons[24] = new Button(
+                            this,
+                            windowFont,
+                           150,
+                            300,
+                            buttonWidth,
+                            buttonHeight,
+                            SizeMargin,
+                            buttonCaptions[24],
+                            buttonColors[24],
+                            (Window.Command)24);
           
+             buttons[25] = new Button(
+                            this,
+                            windowFont,
+                             200,
+                            300,
+                            buttonWidth,
+                            buttonHeight,
+                            SizeMargin,
+                            buttonCaptions[25],
+                            buttonColors[25],
+                            (Window.Command)25);
 
            
              
@@ -1004,42 +1024,12 @@ namespace Microsoft.Samples.CompactFramework
 
 
         
-      private void DoParnthesesOperation(List<Token> tokens)
-           {
-       
-       
-       
-       
-           }
-        
+    
 
         public void DoOperator(Token.TokenType type)
         {
 
              
-
-            if(type==Token.TokenType.RNail)
-                {
-
-
-          var lnail=TokenList.FirstOrDefault(s=>s.Type==Token.TokenType.LNail);
-                var index=TokenList.IndexOf(lnail);
-           var newlist=new List<Token>();
-                while (TokenList[index].Type!=Token.TokenType.RNail)
-	            {
-
-                    newlist.Add(TokenList[index]);
-                    index++;
-
-
-	             }
-
-                DoParnthesesOperation(newlist);
-	                }
-              
-
-               
-        
            
 
             if (CurrentToken().IsOperator())
